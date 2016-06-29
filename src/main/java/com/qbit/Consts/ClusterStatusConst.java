@@ -1,4 +1,4 @@
-package com.qbit;
+package com.qbit.Consts;
 
 import java.awt.*;
 
@@ -26,5 +26,14 @@ public enum ClusterStatusConst {
 
     public Color getColor() {
         return color;
+    }
+
+    public static ClusterStatusConst getConstByName(String name) {
+        for (ClusterStatusConst value : values()) {
+            if (value.getName().equals(name)) {
+                return value;
+            }
+        }
+        return UNKNOWN;
     }
 }

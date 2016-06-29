@@ -1,6 +1,7 @@
 package com.qbit;
 
 import com.qbit.Command.CommandHandler;
+import com.qbit.Consts.ClusterStatusConst;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +59,11 @@ public class DemoControl extends JFrame {
 
     private void btnGoActionPerformed() {
         // Validate Java_Home and AWS setup
+        if (!isClusterServerRunning()) {
+            commandHandler.startInstance(ConfigureSettings.SERVER_ID);
+        } else {
+            commandHandler.stopInstance((ConfigureSettings.SERVER_ID));
+        }
 
         // TODO Bring cluster up if down, spin down if up
     }
