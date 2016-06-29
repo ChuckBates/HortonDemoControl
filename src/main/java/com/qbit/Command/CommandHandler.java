@@ -1,9 +1,9 @@
 package com.qbit.Command;
 
-import java.util.Map;
-
 import com.qbit.ClusterStatusConst;
 import com.qbit.ConfigureSettings;
+
+import java.util.Map;
 
 /**
  * User: chuck
@@ -33,5 +33,9 @@ public class CommandHandler {
     private ClusterStatusConst getServerStatus(String output) {
         // Convert output to object
         return null;
+    }
+
+    public void configureAws() {
+        // TODO using 3 settings from settingsMap, run through aws cli configure, or possibly set environment variables?
     }
 }

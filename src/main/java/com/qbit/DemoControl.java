@@ -1,18 +1,23 @@
 package com.qbit;
 
+import com.qbit.Command.CommandHandler;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.*;
-import com.qbit.Command.*;
 
 public class DemoControl extends JFrame {
 
     private Map<String, String> settingsMap;
+    private CommandHandler commandHandler;
 
     public DemoControl() {
         initializeSettingsMap();
+        commandHandler = new CommandHandler(settingsMap);
+
         initComponents();
         setStatus(ClusterStatusConst.UNKNOWN);
     }
@@ -48,7 +53,6 @@ public class DemoControl extends JFrame {
     }
 
     private boolean isClusterServerRunning() {
-        CommandHandler commandHandler = new CommandHandler(settingsMap);
         return commandHandler.isClusterServerRunning();
     }
 
@@ -64,6 +68,7 @@ public class DemoControl extends JFrame {
 
         if (!settingsMap.isEmpty()) {
             // TODO somehow persist settings for after restart
+            commandHandler.configureAws();
             enableControls(true);
         } else {
             enableControls(false);
