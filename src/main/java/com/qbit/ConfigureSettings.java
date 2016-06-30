@@ -1,9 +1,10 @@
 package com.qbit;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Map;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ConfigureSettings extends JDialog {
 
@@ -17,7 +18,6 @@ public class ConfigureSettings extends JDialog {
     public static final String NODE_4_ID = "Node 4 Id";
     public static final String NODE_5_ID = "Node 5 Id";
     public static final String NODE_6_ID = "Node 6 Id";
-    public static final String NODE_7_ID = "Node 7 Id";
 
     private Map<String, String> settingsMap;
 
@@ -26,6 +26,21 @@ public class ConfigureSettings extends JDialog {
         initComponents();
 
         this.settingsMap = settingsMap;
+        populateFields();
+    }
+
+    private void populateFields() {
+        txtAccessKey.setText(settingsMap.get(ACCESS_KEY));
+        txtSecret.setText(settingsMap.get(SECRET));
+        txtRegion.setText(settingsMap.get(REGION));
+
+        txtServerId.setText(settingsMap.get(SERVER_ID));
+        txtNode1.setText(settingsMap.get(NODE_1_ID));
+        txtNode2.setText(settingsMap.get(NODE_2_ID));
+        txtNode3.setText(settingsMap.get(NODE_3_ID));
+        txtNode4.setText(settingsMap.get(NODE_4_ID));
+        txtNode5.setText(settingsMap.get(NODE_5_ID));
+        txtNode6.setText(settingsMap.get(NODE_6_ID));
     }
 
     @Override
@@ -48,7 +63,6 @@ public class ConfigureSettings extends JDialog {
         settingsMap.put(NODE_4_ID, txtNode4.getText());
         settingsMap.put(NODE_5_ID, txtNode5.getText());
         settingsMap.put(NODE_6_ID, txtNode6.getText());
-        settingsMap.put(NODE_7_ID, txtNode7.getText());
 
         // TODO validate fields
 
@@ -84,8 +98,6 @@ public class ConfigureSettings extends JDialog {
         txtNode6 = new JTextField();
         lblNode3 = new JLabel();
         txtNode3 = new JTextField();
-        lblNode7 = new JLabel();
-        txtNode7 = new JTextField();
         panel1 = new JPanel();
         btnSave = new JButton();
         btnCancel = new JButton();
@@ -247,19 +259,6 @@ public class ConfigureSettings extends JDialog {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));
 
-        //---- lblNode7 ----
-        lblNode7.setText("Node 7 Instance ID:");
-        lblNode7.setName("lblNode7");
-        contentPane.add(lblNode7, new GridBagConstraints(4, 10, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
-
-        //---- txtNode7 ----
-        txtNode7.setName("txtNode7");
-        contentPane.add(txtNode7, new GridBagConstraints(5, 10, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
-
         //======== panel1 ========
         {
             panel1.setName("panel1");
@@ -326,8 +325,6 @@ public class ConfigureSettings extends JDialog {
     private JTextField txtNode6;
     private JLabel lblNode3;
     private JTextField txtNode3;
-    private JLabel lblNode7;
-    private JTextField txtNode7;
     private JPanel panel1;
     private JButton btnSave;
     private JButton btnCancel;

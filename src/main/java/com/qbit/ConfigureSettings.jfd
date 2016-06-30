@@ -165,19 +165,6 @@ new FormModel {
 				"gridx": 2
 				"gridy": 10
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "lblNode7"
-				"text": "Node 7 Instance ID:"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridx": 4
-				"gridy": 10
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "txtNode7"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridx": 5
-				"gridy": 10
-			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0:1.0, 0:1.0, 0, 0:1.0, 0:1.0"
 				"$rowSpecs": "0"

@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Map;
 
 public class DemoControl extends JFrame {
@@ -29,8 +28,7 @@ public class DemoControl extends JFrame {
     }
 
     private void initializeSettingsMap() {
-        settingsMap = new HashMap<>();
-        // TODO initialize settings map from persisted data if any
+        settingsMap = SettingsUtil.readSettings();
     }
 
     public static void main(String[] args) {
@@ -45,7 +43,10 @@ public class DemoControl extends JFrame {
     }
 
     private void btnRefreshActionPerformed() {
-        // Validate Java_Home and AWS setup
+        if (!validateEnvironment()) {
+            return;
+        }
+
         if (isClusterServerRunning()) {
             setStatus(ClusterStatusConst.RUNNING);
         } else {
@@ -53,19 +54,37 @@ public class DemoControl extends JFrame {
         }
     }
 
+    private boolean validateEnvironment() {
+        // TODO validate environment
+        return true;
+    }
+
     private boolean isClusterServerRunning() {
         return commandHandler.isClusterServerRunning();
     }
 
     private void btnGoActionPerformed() {
-        // Validate Java_Home and AWS setup
-        if (!isClusterServerRunning()) {
-            commandHandler.startInstance(ConfigureSettings.SERVER_ID);
-        } else {
-            commandHandler.stopInstance((ConfigureSettings.SERVER_ID));
+        if (!validateEnvironment()) {
+            return;
         }
 
-        // TODO Bring cluster up if down, spin down if up
+        if (!isClusterServerRunning()) {
+            commandHandler.startInstance(ConfigureSettings.SERVER_ID);
+            commandHandler.startInstance(ConfigureSettings.NODE_1_ID);
+            commandHandler.startInstance(ConfigureSettings.NODE_2_ID);
+            commandHandler.startInstance(ConfigureSettings.NODE_3_ID);
+            commandHandler.startInstance(ConfigureSettings.NODE_4_ID);
+            commandHandler.startInstance(ConfigureSettings.NODE_5_ID);
+            commandHandler.startInstance(ConfigureSettings.NODE_6_ID);
+        } else {
+            commandHandler.stopInstance((ConfigureSettings.SERVER_ID));
+            commandHandler.stopInstance((ConfigureSettings.NODE_1_ID));
+            commandHandler.stopInstance((ConfigureSettings.NODE_2_ID));
+            commandHandler.stopInstance((ConfigureSettings.NODE_3_ID));
+            commandHandler.stopInstance((ConfigureSettings.NODE_4_ID));
+            commandHandler.stopInstance((ConfigureSettings.NODE_5_ID));
+            commandHandler.stopInstance((ConfigureSettings.NODE_6_ID));
+        }
     }
 
     private void btnConfigureActionPerformed() {
@@ -73,7 +92,7 @@ public class DemoControl extends JFrame {
         settings.setVisible(true);
 
         if (!settingsMap.isEmpty()) {
-            // TODO somehow persist settings for after restart
+            SettingsUtil.saveSettings(settingsMap);
             commandHandler.configureAws();
             enableControls(true);
         } else {
