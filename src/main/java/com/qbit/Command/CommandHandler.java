@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qbit.ConfigureSettings;
 import com.qbit.Consts.InstanceStatusConst;
-import com.qbit.Objects.InstanceRunning.RunningInstancesRespone;
+import com.qbit.Objects.InstanceRunning.RunningInstancesResponse;
 import com.qbit.Objects.StartStopInstance.StartingInstancesResponse;
 
 import java.util.Map;
@@ -34,33 +34,25 @@ public class CommandHandler {
                 FLAG_INSTANCE_ID +
                 settingsMap.get(ConfigureSettings.SERVER_ID);
 
-        String output = CommandUtil.Process(command);
+        String output = CommandUtil.process(command);
         InstanceStatusConst runningServerStatus = getRunningServerStatus(output);
         return runningServerStatus == InstanceStatusConst.RUNNING || runningServerStatus == InstanceStatusConst.PENDING;
     }
 
-    public boolean startInstance(String instance) {
+    public boolean toggleInstance(String instance, String state) {
         String command = AWS +
                 EC2 +
-                START_INSTANCES +
+                state +
                 FLAG_INSTANCE_ID +
                 settingsMap.get(instance);
 
-        String output = CommandUtil.Process(command);
+        String output = CommandUtil.process(command);
         InstanceStatusConst serverStatus = getServerStatus(output);
-        return serverStatus == InstanceStatusConst.PENDING || serverStatus == InstanceStatusConst.RUNNING;
-    }
-
-    public boolean stopInstance(String instance) {
-        String command = AWS +
-                EC2 +
-                STOP_INSTANCES +
-                FLAG_INSTANCE_ID +
-                settingsMap.get(instance);
-
-        String output = CommandUtil.Process(command);
-        InstanceStatusConst serverStatus = getServerStatus(output);
-        return serverStatus == InstanceStatusConst.STOPPED || serverStatus == InstanceStatusConst.STOPPING;
+        if (state.equals(START_INSTANCES)) {
+            return serverStatus == InstanceStatusConst.PENDING || serverStatus == InstanceStatusConst.RUNNING;
+        } else {
+            return serverStatus == InstanceStatusConst.STOPPED || serverStatus == InstanceStatusConst.STOPPING;
+        }
     }
 
     private InstanceStatusConst getServerStatus(String output) {
@@ -71,9 +63,21 @@ public class CommandHandler {
 
     private InstanceStatusConst getRunningServerStatus(String output) {
         Gson gson = new GsonBuilder().create();
-        RunningInstancesRespone instance = gson.fromJson(output, RunningInstancesRespone.class);
+        RunningInstancesResponse instance = gson.fromJson(output, RunningInstancesResponse.class);
         return InstanceStatusConst.getConstByName(instance.getReservations()[0].getInstances()[0].getState().getName());
     }
+
+    public boolean isAwsInstalled() {
+        String command = AWS;
+        String output = CommandUtil.process(command);
+        return !output.startsWith("'aws' is not recognized");
+    }
+
+//    public boolean isAwsConfigured() {
+//        String command = AWS + "configure";
+//        String output = CommandUtil.getConfiguration(command);
+//        return !output.startsWith("'aws' is not recognized");
+//    }
 
     public void configureAws() {
         // TODO using 3 settings from settingsMap, run through aws cli configure, or possibly set environment variables?

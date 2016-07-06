@@ -18,6 +18,7 @@ public class ConfigureSettings extends JDialog {
     public static final String NODE_4_ID = "Node 4 Id";
     public static final String NODE_5_ID = "Node 5 Id";
     public static final String NODE_6_ID = "Node 6 Id";
+    public static final String INVALID_SETTINGS_TITLE = "Invalid Settings";
 
     private Map<String, String> settingsMap;
 
@@ -64,9 +65,73 @@ public class ConfigureSettings extends JDialog {
         settingsMap.put(NODE_5_ID, txtNode5.getText());
         settingsMap.put(NODE_6_ID, txtNode6.getText());
 
-        // TODO validate fields
+        if (validateFields()) {
+            btnCancelActionPerformed();
+        }
+    }
 
-        btnCancelActionPerformed();
+    private boolean validateFields() {
+        if (SettingsUtil.isEmpty(txtAccessKey.getText())) {
+            JOptionPane.showMessageDialog(this, "Access Key required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtAccessKey.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtSecret.getText())) {
+            JOptionPane.showMessageDialog(this, "Secret Access Key required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtSecret.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtRegion.getText())) {
+            JOptionPane.showMessageDialog(this, "Region required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtRegion.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtServerId.getText())) {
+            JOptionPane.showMessageDialog(this, "Ambari Server instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtServerId.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtNode1.getText())) {
+            JOptionPane.showMessageDialog(this, "Node 1 instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtNode1.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtNode2.getText())) {
+            JOptionPane.showMessageDialog(this, "Node 2 instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtNode2.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtNode3.getText())) {
+            JOptionPane.showMessageDialog(this, "Node 3 instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtNode3.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtNode4.getText())) {
+            JOptionPane.showMessageDialog(this, "Node 4 instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtNode4.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtNode5.getText())) {
+            JOptionPane.showMessageDialog(this, "Node 5 instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtNode5.requestFocus();
+            return false;
+        }
+
+        if (SettingsUtil.isEmpty(txtNode6.getText())) {
+            JOptionPane.showMessageDialog(this, "Node 6 instance ID required.", INVALID_SETTINGS_TITLE, JOptionPane.ERROR_MESSAGE);
+            txtNode6.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
     private void btnCancelActionPerformed() {
@@ -76,31 +141,31 @@ public class ConfigureSettings extends JDialog {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        lblCLI = new JLabel();
-        lblAccessKey = new JLabel();
+        JLabel lblCLI = new JLabel();
+        JLabel lblAccessKey = new JLabel();
         txtAccessKey = new JTextField();
-        lblSecretAccessKey = new JLabel();
+        JLabel lblSecretAccessKey = new JLabel();
         txtSecret = new JTextField();
-        lblRegion = new JLabel();
+        JLabel lblRegion = new JLabel();
         txtRegion = new JTextField();
-        lblCluster = new JLabel();
-        lblServerId = new JLabel();
+        JLabel lblCluster = new JLabel();
+        JLabel lblServerId = new JLabel();
         txtServerId = new JTextField();
-        lblNode4 = new JLabel();
+        JLabel lblNode4 = new JLabel();
         txtNode4 = new JTextField();
-        lblNode1 = new JLabel();
+        JLabel lblNode1 = new JLabel();
         txtNode1 = new JTextField();
-        lblNode5 = new JLabel();
+        JLabel lblNode5 = new JLabel();
         txtNode5 = new JTextField();
-        lblNode2 = new JLabel();
+        JLabel lblNode2 = new JLabel();
         txtNode2 = new JTextField();
-        lblNode6 = new JLabel();
+        JLabel lblNode6 = new JLabel();
         txtNode6 = new JTextField();
-        lblNode3 = new JLabel();
+        JLabel lblNode3 = new JLabel();
         txtNode3 = new JTextField();
-        panel1 = new JPanel();
-        btnSave = new JButton();
-        btnCancel = new JButton();
+        JPanel panel1 = new JPanel();
+        JButton btnSave = new JButton();
+        JButton btnCancel = new JButton();
 
         //======== this ========
         setTitle("Settings");
@@ -303,30 +368,15 @@ public class ConfigureSettings extends JDialog {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    private JLabel lblCLI;
-    private JLabel lblAccessKey;
     private JTextField txtAccessKey;
-    private JLabel lblSecretAccessKey;
     private JTextField txtSecret;
-    private JLabel lblRegion;
     private JTextField txtRegion;
-    private JLabel lblCluster;
-    private JLabel lblServerId;
     private JTextField txtServerId;
-    private JLabel lblNode4;
     private JTextField txtNode4;
-    private JLabel lblNode1;
     private JTextField txtNode1;
-    private JLabel lblNode5;
     private JTextField txtNode5;
-    private JLabel lblNode2;
     private JTextField txtNode2;
-    private JLabel lblNode6;
     private JTextField txtNode6;
-    private JLabel lblNode3;
     private JTextField txtNode3;
-    private JPanel panel1;
-    private JButton btnSave;
-    private JButton btnCancel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

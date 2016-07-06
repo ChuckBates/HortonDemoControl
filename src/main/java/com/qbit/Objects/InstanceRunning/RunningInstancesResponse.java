@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 /**
  * User: cbates
  */
-public class RunningInstancesRespone {
+public class RunningInstancesResponse {
 
     @SerializedName("Reservations")
     private Reservations[] reservations;
 
-    public RunningInstancesRespone(Reservations[] reservations) {
+    public RunningInstancesResponse(Reservations[] reservations) {
         this.reservations = reservations;
     }
 

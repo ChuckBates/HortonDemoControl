@@ -13,6 +13,6 @@ public class CommandUtilTest {
         String inputCommand = "cmd.exe /c echo Hello";
         String output = "Hello";
 
-        assertEquals(output, CommandUtil.Process(inputCommand));
+        assertEquals(output, CommandUtil.process(inputCommand));
     }
 }

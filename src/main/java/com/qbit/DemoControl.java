@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class DemoControl extends JFrame {
 
+    public static final String ERROR_TITLE = "Error Starting Instance";
+    public static final String ENVIRONMENT_ERROR_TITLE = "Environment Not Valid";
+
     private Map<String, String> settingsMap;
     private CommandHandler commandHandler;
 
@@ -55,7 +58,14 @@ public class DemoControl extends JFrame {
     }
 
     private boolean validateEnvironment() {
+        if (!commandHandler.isAwsInstalled()) {
+            JOptionPane.showMessageDialog(this, "AWS command line interface not installed.", ENVIRONMENT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         // TODO validate environment
+//        if (!commandHandler.isAwsConfigured()) {
+//
+//        }
         return true;
     }
 
@@ -69,21 +79,45 @@ public class DemoControl extends JFrame {
         }
 
         if (!isClusterServerRunning()) {
-            commandHandler.startInstance(ConfigureSettings.SERVER_ID);
-            commandHandler.startInstance(ConfigureSettings.NODE_1_ID);
-            commandHandler.startInstance(ConfigureSettings.NODE_2_ID);
-            commandHandler.startInstance(ConfigureSettings.NODE_3_ID);
-            commandHandler.startInstance(ConfigureSettings.NODE_4_ID);
-            commandHandler.startInstance(ConfigureSettings.NODE_5_ID);
-            commandHandler.startInstance(ConfigureSettings.NODE_6_ID);
+            toggleCluster(CommandHandler.START_INSTANCES);
         } else {
-            commandHandler.stopInstance((ConfigureSettings.SERVER_ID));
-            commandHandler.stopInstance((ConfigureSettings.NODE_1_ID));
-            commandHandler.stopInstance((ConfigureSettings.NODE_2_ID));
-            commandHandler.stopInstance((ConfigureSettings.NODE_3_ID));
-            commandHandler.stopInstance((ConfigureSettings.NODE_4_ID));
-            commandHandler.stopInstance((ConfigureSettings.NODE_5_ID));
-            commandHandler.stopInstance((ConfigureSettings.NODE_6_ID));
+            toggleCluster(CommandHandler.STOP_INSTANCES);
+        }
+    }
+
+    private void toggleCluster(String state) {
+        if (!commandHandler.toggleInstance(ConfigureSettings.SERVER_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Ambari Server state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!commandHandler.toggleInstance(ConfigureSettings.NODE_1_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Node 1 state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!commandHandler.toggleInstance(ConfigureSettings.NODE_2_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Node 2 state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!commandHandler.toggleInstance(ConfigureSettings.NODE_3_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Node 3 state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!commandHandler.toggleInstance(ConfigureSettings.NODE_4_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Node 4 state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!commandHandler.toggleInstance(ConfigureSettings.NODE_5_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Node 5 state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!commandHandler.toggleInstance(ConfigureSettings.NODE_6_ID, state)) {
+            JOptionPane.showMessageDialog(this, "Unable to toggle Node 6 state.", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
         }
     }
 

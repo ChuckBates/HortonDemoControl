@@ -42,4 +42,8 @@ public class SettingsUtil {
             return new HashMap<>();
         }
     }
+
+    public static boolean isEmpty(String text) {
+        return text == null || text.trim().isEmpty();
+    }
 }
